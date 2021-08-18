@@ -33,7 +33,7 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v2
         with:
-          context: ./nd064
+          context: ./nd064/techtrends
           file: ./nd064/Dockerfile
           push: true
           tags: jasonwee/techtrends:latest
