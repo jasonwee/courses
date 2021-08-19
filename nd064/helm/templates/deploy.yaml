@@ -28,3 +28,11 @@ spec:
         - containerPort: {{ .Values.ports.containerPort }}
         resources:
 {{ toYaml .Values.resources | indent 12 }}
+        readinessProbe:
+          httpGet:
+            path: {{ .Values.readinessProbe.httpGet.path }}
+            port: {{ .Values.readinessProbe.httpGet.port }}
+        livenessProbe:
+          httpGet:
+            path: {{ .Values.livenessProbe.httpGet.path }}
+            port: {{ .Values.livenessProbe.httpGet.port }}
