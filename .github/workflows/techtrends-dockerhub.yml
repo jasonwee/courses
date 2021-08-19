@@ -8,7 +8,7 @@ name: "TechTrends - Package with Docker"
 on:
   push:
     branches:
-      - 'master'
+      - 'main'
 
 jobs:
   docker:
