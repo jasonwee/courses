@@ -41,10 +41,10 @@ def index():
 def post(post_id):
     post = get_post(post_id)
     if post is None:
-      app.logger.warning('Non existing page "{0}" is requested!'.format(post_id))
+      app.logger.warning('Post with id %r not found', post_id)
       return render_template('404.html'), 404
     else:
-      app.logger.info('Article "{0}" retrieved!'.format(post['title']))
+      app.logger.info('Article %r retrieved!' % post['title'])
       return render_template('post.html', post=post)
 
 # Define the About Us page
@@ -69,7 +69,7 @@ def create():
             connection.commit()
             connection.close()
 
-            app.logger.info('Article "{0}" is created'.format(title))
+            app.logger.info('Article %r is created', title)
             return redirect(url_for('index'))
 
     return render_template('create.html')

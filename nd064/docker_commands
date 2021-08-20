@@ -8,7 +8,7 @@ docker run -d -p 7111:3111 --name techtrends --rm  techtrends
 
 ## Docker commands used to get the application logs
 # TODO: insert the docker logs command
-docker logs techtrends
+docker logs -f $(docker ps | grep techtrends | tr " " "\\n" | tail -1)
 
 ## Logs from the container running the TechTrends application
 # TODO: paste logs from the Docker container
