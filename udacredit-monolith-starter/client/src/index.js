@@ -13,7 +13,7 @@ class App extends React.Component {
     }
 
     loadCustomers = () => {
-        fetch("http://localhost:5000/api/customers")
+        fetch("http://localhost:5001/api/customers")
             .then(res => res.json())
             .then(
                 (result) => {
