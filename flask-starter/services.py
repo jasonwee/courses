@@ -15,21 +15,24 @@ def retrieve_orders():
     """
     return [
         {
-            "id": "1",
-            "status": Status.Queued.value,
-            "created_at": "2020-10-16T10:31:10.969696",
-            "created_by": "USER14",
+            "order_id": 1,
+            "created_by": "justin",
+            "status": Status.Completed.value,
+            "created_at": "2020-09-28T08:56:44",
             "equipment": [
-                "KEYBOARD", "MOUSE"
+                "KEYBOARD"
             ]
         },
         {
-            "id": "2",
+            "order_id": 2,
+            "created_by": "tom",
             "status": Status.Queued.value,
-            "created_at": "2020-10-16T10:29:10.969696",
-            "created_by": "USER15",
+            "created_at": "2020-09-28T09:56:44",
             "equipment": [
-                "KEYBOARD", "WEBCAM"
+               "MOUSE",
+               "WEBCAM"
             ]
         }
     ]
+
+
