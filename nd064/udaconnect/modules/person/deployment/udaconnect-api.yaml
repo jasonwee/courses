@@ -19,7 +19,7 @@ kind: Deployment
 metadata:
   labels:
     service: svc-api-person
-  name: svc-deployment-person
+  name: api-deployment-person
 spec:
   replicas: 1
   selector:
@@ -35,21 +35,6 @@ spec:
         name: udaconnect-person
         imagePullPolicy: Always
         env:
-        - name: DB_USERNAME
-          valueFrom:
-            configMapKeyRef:
-              name: db-env
-              key: DB_USERNAME
-        - name: DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: db-secret
-              key: DB_PASSWORD
-        - name: DB_NAME
-          valueFrom:
-            configMapKeyRef:
-              name: db-env
-              key: DB_NAME
         - name: DB_HOST
           valueFrom:
             configMapKeyRef:
@@ -60,4 +45,19 @@ spec:
             configMapKeyRef:
               name: db-env
               key: DB_PORT
+        - name: DB_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: db-env
+              key: DB_NAME
+        - name: DB_USERNAME
+          valueFrom:
+            configMapKeyRef:
+              name: db-env
+              key: DB_USERNAME
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: DB_PASSWORD
       restartPolicy: Always
