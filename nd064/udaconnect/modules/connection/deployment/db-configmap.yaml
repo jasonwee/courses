@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+data:
+  DB_USERNAME: "ct_connections"
+  DB_NAME: "connections"
+  DB_HOST: "postgres-connections"
+  DB_PORT: "5432"
+  PERSON_SERVICE_ENDPOINT: "http://svc-api-person:5000/"
+metadata:
+  name: db-connections-map

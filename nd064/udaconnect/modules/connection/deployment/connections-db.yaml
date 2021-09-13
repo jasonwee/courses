@@ -1,0 +1,86 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: postgres-volume-connections
+  labels:
+    type: local
+    app: postgres-connections
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 256Mi
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/mnt/data/connections-db"
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: postgres-connections-pv-claim
+  labels:
+    app: postgres-connections
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 256Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-connections
+  labels:
+    app: postgres-connections
+spec:
+  type: NodePort
+  selector:
+    app: postgres-connections
+  ports:
+   - port: 5432
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-connections
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-connections
+  template:
+    metadata:
+      labels:
+        app: postgres-connections
+    spec:
+      containers:
+        - name: postgres-connections-container
+          image: postgis/postgis:12-2.5-alpine
+          imagePullPolicy: "IfNotPresent"
+          ports:
+            - containerPort: 5432
+          env:
+          - name: POSTGRES_DB
+            valueFrom:
+              configMapKeyRef:
+                name: db-connections-map
+                key: DB_NAME
+          - name: POSTGRES_USER
+            valueFrom:
+              configMapKeyRef:
+                name: db-connections-map
+                key: DB_USERNAME
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: db-connections-secret
+                key: DB_PASSWORD
+          volumeMounts:
+            - mountPath: /var/lib/connectionsdb/data
+              name: connections-db
+      volumes:
+        - name: connections-db
+          persistentVolumeClaim:
+            claimName: postgres-connections-pv-claim
