@@ -76,9 +76,6 @@ verify
 ```
 master:~ # kubectl get pods
 NAME                              READY   STATUS    RESTARTS   AGE
-postgres-5f676c995d-jvdrp         1/1     Running   1          6h30m
-udaconnect-app-6ddf7c79fb-kqfmb   1/1     Running   1          6h30m
-udaconnect-api-89dbffbf9-qhxzx    1/1     Running   1          6h30m
 my-release-zookeeper-0            1/1     Running   0          3m17s
 my-release-kafka-0                1/1     Running   0          3m17s
 master:~ # 
@@ -87,11 +84,4 @@ master:~ #
 
 
 
-## kafka
-```
-python3.9 -m venv py39_env
-source py39_env/bin/activate
-pip3 install --upgrade pip
-pip install kafka-python
-```
 
