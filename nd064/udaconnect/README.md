@@ -1,3 +1,4 @@
+
 # UdaConnect
 ## Overview
 ### Background
@@ -7,8 +8,6 @@ Conferences and conventions are hotspots for making connections. Professionals i
 You work for a company that is building a app that uses location data from mobile devices. Your company has built a [POC](https://en.wikipedia.org/wiki/Proof_of_concept) application to ingest location data named UdaTracker. This POC was built with the core functionality of ingesting location and identifying individuals who have shared a close geographic proximity.
 
 Management loved the POC so now that there is buy-in, we want to enhance this application. You have been tasked to enhance the POC application into a [MVP](https://en.wikipedia.org/wiki/Minimum_viable_product) to handle the large volume of location data that will be ingested.
-
-To do so, ***you will refactor this application into a microservice architecture using message passing techniques that you have learned in this course***. It’s easy to get lost in the countless optimizations and changes that can be made: your priority should be to approach the task as an architect and refactor the application into microservices. File organization, code linting -- these are important but don’t affect the core functionality and can possibly be tagged as TODO’s for now!
 
 ### Technologies
 * [Flask](https://flask.palletsprojects.com/en/1.1.x/) - API webserver
@@ -27,8 +26,9 @@ We will be installing the tools that we'll need to use for getting our environme
 1. [Install Docker](https://docs.docker.com/get-docker/)
 2. [Set up a DockerHub account](https://hub.docker.com/)
 3. [Set up `kubectl`](https://rancher.com/docs/rancher/v2.x/en/cluster-admin/cluster-access/kubectl/)
-4. [Install VirtualBox](https://www.virtualbox.org/wiki/Downloads) with at least version 6.0
-5. [Install Vagrant](https://www.vagrantup.com/docs/installation) with at least version 2.0
+4. [Install VirtualBox](https://www.virtualbox.org/wiki/Downloads) with at least version 6.1
+5. [Install Vagrant](https://www.vagrantup.com/docs/installation) with at least version 2.2
+6. [Install Helm](https://helm.sh/docs/intro/install/) with at least version 3.6.3
 
 ### Environment Setup
 To run the application, you will need a K8s cluster running locally and to interface with it via `kubectl`. We will be using Vagrant with VirtualBox to run K3s.
@@ -75,7 +75,11 @@ Type `exit` to exit the virtual OS and you will find yourself back in your compu
 
 Afterwards, you can test that `kubectl` works by running a command like `kubectl describe services`. It should not return any errors.
 
+
 ### Steps
+
+TODO write here
+
 1. `kubectl apply -f deployment/db-configmap.yaml` - Set up environment variables for the pods
 2. `kubectl apply -f deployment/db-secret.yaml` - Set up secrets for the pods
 3. `kubectl apply -f deployment/postgres.yaml` - Set up a Postgres database running PostGIS
