@@ -1,0 +1,72 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    service: svc-api-location-consumer
+  name: svc-api-location-consumer
+spec:
+  ports:
+  - name: "9092"
+    port: 9092
+    targetPort: 9092
+  selector:
+    service: svc-api-location-consumer
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: svc-api-location-consumer
+  name: api-deployment-location-consumer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: svc-api-location-consumer
+  template:
+    metadata:
+      labels:
+        service: svc-api-location-consumer
+    spec:
+      containers:
+      - image: jasonwee/udaconnect-location-event-consumer:latest
+        name: udaconnect-location-event-consumer
+        imagePullPolicy: Always
+        env:
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: db-connections-map
+              key: DB_HOST
+        - name: DB_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: db-connections-map
+              key: DB_PORT
+        - name: DB_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: db-connections-map
+              key: DB_NAME
+        - name: DB_USERNAME
+          valueFrom:
+            configMapKeyRef:
+              name: db-connections-map
+              key: DB_USERNAME
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-connections-secret
+              key: DB_PASSWORD
+        - name: KAFKA_URL
+          valueFrom:
+            configMapKeyRef:
+              name: config-location-map
+              key: KAFKA_URL
+        - name: KAFKA_TOPIC
+          valueFrom:
+            configMapKeyRef:
+              name: config-location-map
+              key: KAFKA_TOPIC
+      restartPolicy: Always
