@@ -1,10 +1,10 @@
 kind: PersistentVolume
 apiVersion: v1
 metadata:
-  name: postgres-volume
+  name: postgres-volume-person
   labels:
     type: local
-    app: postgres
+    app: postgres-person
 spec:
   storageClassName: manual
   capacity:
@@ -12,14 +12,14 @@ spec:
   accessModes:
     - ReadWriteMany
   hostPath:
-    path: "/mnt/data"
+    path: "/mnt/data/db"
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: postgres-pv-claim
+  name: postgres-person-pv-claim
   labels:
-    app: postgres
+    app: postgres-person
 spec:
   storageClassName: manual
   accessModes:
@@ -31,37 +31,42 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: postgres
+  name: postgres-person
   labels:
-    app: postgres
+    app: postgres-person
 spec:
   type: NodePort
   selector:
-    app: postgres
+    app: postgres-person
   ports:
    - port: 5432
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: postgres
+  name: postgres-person
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: postgres
+      app: postgres-person
   template:
     metadata:
       labels:
-        app: postgres
+        app: postgres-person
     spec:
       containers:
-        - name: postgres
-          image: postgis/postgis:12-2.5-alpine
+        - name: postgres-person-container
+          image: library/postgres:latest
           imagePullPolicy: "IfNotPresent"
           ports:
             - containerPort: 5432
           env:
+          - name: POSTGRES_DB
+            valueFrom:
+              configMapKeyRef:
+                name: db-env
+                key: DB_NAME
           - name: POSTGRES_USER
             valueFrom:
               configMapKeyRef:
@@ -72,15 +77,10 @@ spec:
               secretKeyRef:
                 name: db-secret
                 key: DB_PASSWORD
-          - name: POSTGRES_DB
-            valueFrom:
-              configMapKeyRef:
-                name: db-env
-                key: DB_NAME
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
-              name: postgresdb
+              name: person-db
       volumes:
-        - name: postgresdb
+        - name: person-db
           persistentVolumeClaim:
-            claimName: postgres-pv-claim
+            claimName: postgres-person-pv-claim
