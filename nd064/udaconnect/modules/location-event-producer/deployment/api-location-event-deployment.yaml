@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    service: api-location-event
+  name: svc-api-location-event
+spec:
+  ports:
+  - name: "5005"
+    port: 5005
+    targetPort: 5005
+    nodePort: 30003
+  selector:
+    service: api-location-event
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: api-location-event
+  name: api-location-event
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: api-location-event
+  template:
+    metadata:
+      labels:
+        service: api-location-event
+    spec:
+      containers:
+      - image: jasonwee/udaconnect-location-event-producer:latest
+        name: udaconnect-location-event-producer
+        imagePullPolicy: Always
+        env:
+        - name: KAFKA_URL
+          valueFrom:
+            configMapKeyRef:
+              name: config-location-event-map
+              key: KAFKA_URL
+        - name: KAFKA_TOPIC
+          valueFrom:
+            configMapKeyRef:
+              name: config-location-event-map
+              key: KAFKA_TOPIC
+      restartPolicy: Always

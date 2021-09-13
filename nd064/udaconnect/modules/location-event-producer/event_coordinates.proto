@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+message EventCoordinatesMessage {
+  int32 userId = 1;
+  int32 latitude = 2;
+  int32 longitude = 3;
+}
+
+service EventCoordinatesService {
+  rpc Create(EventCoordinatesMessage) returns (EventCoordinatesMessage);
+}
