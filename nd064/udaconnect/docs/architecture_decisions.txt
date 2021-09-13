@@ -1,6 +1,6 @@
 Location event sending could be from user devices and it is expected data can arrive a lot, hence, to avoid webapp threads hanging, it is passed to the kafka via the link grpc. This is done and managed by the microservice location-event-producer
 
-On the consumer end of kafka, it is service by location-event-consumer. For the locaiton received, it is process and save into postgresql database.
+On the consumer end of kafka, it is service by location-event-consumer. For the location received, it is process and save into postgresql database.
 
 As for the person microservice, this endpoint allow person operation, that is to create and retrieve user resource. Connection microservice will retrieve connections of a person.
 
