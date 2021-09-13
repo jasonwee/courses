@@ -1,6 +1,6 @@
 FROM python:3.9-alpine
 
-WORKDIR .
+WORKDIR /app
 
 RUN apk add --no-cache gcc g++ musl-dev linux-headers geos libc-dev postgresql-dev
 COPY . .
