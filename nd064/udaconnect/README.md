@@ -148,14 +148,27 @@ master:~ #
 ```
 $ cd modules/person/
 $ kubectl apply -f deployment/
+```
+once the pods are up include postgres person, populate the db
 
 ```
+bash scripts/run_db_command.sh <POSTGRES POD NAME>
+```
+
+
 3. connection
 ```
 $ cd modules/connection/
 $ kubectl apply -f deployment/
 
 ```
+
+once the pods are up include postgres connection, populate the db
+
+```
+bash scripts/run_db_command.sh <POSTGRES POD NAME>
+```
+
 
 4. location-event-producer
 ```
