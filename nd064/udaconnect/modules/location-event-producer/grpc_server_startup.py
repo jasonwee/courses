@@ -1,4 +1,3 @@
-print('begin 0')
 import event_coordinates_pb2
 import event_coordinates_pb2_grpc
 import grpc
@@ -6,11 +5,8 @@ import json
 import logging
 import os
 
-print('begin 1')
 from concurrent import futures
 from kafka import KafkaProducer
-
-print('begin 2')
 
 kafka_url = os.environ["KAFKA_URL"]
 kafka_topic = os.environ["KAFKA_TOPIC"]
@@ -21,12 +17,6 @@ logging.info('connecting to kafka topic ', kafka_topic)
 print('connecting to kafka topic ', kafka_topic)
 
 producer = KafkaProducer(bootstrap_servers=kafka_url)
-#producer = KafkaProducer(bootstrap_servers=kafka_url,
-                         #client_id=######,
-                         #value_serializer=JsonSerializer.serialize,
-#                         api_version=(2, 8, 0)
-#                        )
-
 
 class EventCoordinatesServicer(event_coordinates_pb2_grpc.EventCoordinatesServiceServicer):
 
