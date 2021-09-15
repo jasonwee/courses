@@ -1,0 +1,16 @@
+run the sample grpc client and send coordinate to grpc
+
+```
+jason@localhost:~/courses/nd064/udaconnect/modules/location-event-producer$ source py39_env/bin/activate
+(py39_env) jason@localhost:~/courses/nd064/udaconnect/modules/location-event-producer$ python3 client-grpc.py 
+Sending coordinates...
+Coordinates sent...
+userId: 1
+latitude: -100
+longitude: 30
+ userId: 9
+latitude: -100
+longitude: 30
+
+(py39_env) jason@localhost:~/courses/nd064/udaconnect/modules/location-event-producer$ 
+```
