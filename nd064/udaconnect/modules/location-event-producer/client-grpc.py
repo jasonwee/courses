@@ -2,9 +2,7 @@ import event_coordinates_pb2
 import event_coordinates_pb2_grpc
 import grpc
 
-"""
-Simulates user mobiles sending coordinates to gRPC
-"""
+# Simulates user device sending coordinates to gRPC
 
 print("Sending coordinates...")
 
