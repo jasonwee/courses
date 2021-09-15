@@ -1,0 +1,64 @@
+{
+	"variables": [],
+	"info": {
+		"name": "udaconnect",
+		"_postman_id": "55bc7c60-7dc7-d7df-a0fc-8e75b057f72a",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "retrieve person",
+			"request": {
+				"url": "",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "get person with an ID",
+			"request": {
+				"url": "",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "get person connection",
+			"request": {
+				"url": "",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "add a person",
+			"request": {
+				"url": "localhost:30001/api/persons",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n \"first_name\": \"jason\",\n \"last_name\": \"wee\",\n \"company_name\": \"test_company\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
