@@ -160,6 +160,95 @@ clusterrolebinding.rbac.authorization.k8s.io/jaeger-operator created
 vagrant@localhost:~>
 ```
 
+
+## deploying application
+```
+vagrant@localhost:/vagrant/manifests> pwd
+/vagrant/manifests
+vagrant@localhost:/vagrant/manifests> ls
+app  other
+vagrant@localhost:/vagrant/manifests> tree
+.
+├── app
+│   ├── backend.yaml
+│   ├── frontend.yaml
+│   └── trial.yaml
+└── other
+    ├── elasticsearch.yaml
+    ├── grafana-svc.yaml
+    └── jaeger-elasticsearch.yaml
+
+2 directories, 6 files
+vagrant@localhost:/vagrant/manifests>
+vagrant@localhost:/vagrant/manifests> kubectl apply -f app/
+deployment.apps/backend-app created
+service/backend-service created
+deployment.apps/frontend-app created
+service/frontend-service created
+deployment.apps/trial-app created
+service/trial-service created
+vagrant@localhost:/vagrant/manifests> kubectl get all
+NAME                               READY   STATUS              RESTARTS   AGE
+pod/backend-app-5f749755f4-2swb8   0/1     ContainerCreating   0          39s
+pod/backend-app-5f749755f4-rtk72   0/1     ContainerCreating   0          39s
+pod/backend-app-5f749755f4-lkctq   0/1     ContainerCreating   0          39s
+pod/svclb-backend-service-8q8wg    0/1     Pending             0          39s
+pod/frontend-app-75cd57cfd-tw8cp   0/1     ContainerCreating   0          39s
+pod/frontend-app-75cd57cfd-t2npv   0/1     ContainerCreating   0          39s
+pod/frontend-app-75cd57cfd-k2gvb   0/1     ContainerCreating   0          39s
+pod/svclb-trial-service-4bd7b      0/1     Pending             0          38s
+pod/trial-app-6cd98d67f4-c4f64     0/1     ContainerCreating   0          38s
+pod/trial-app-6cd98d67f4-nmx8j     0/1     ContainerCreating   0          38s
+pod/trial-app-6cd98d67f4-bfqwv     0/1     ContainerCreating   0          38s
+pod/svclb-frontend-service-dcsb7   1/1     Running             0          38s
+
+NAME                       TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+service/kubernetes         ClusterIP      10.43.0.1       <none>        443/TCP          44m
+service/backend-service    LoadBalancer   10.43.222.163   <pending>     80:31202/TCP     39s
+service/trial-service      LoadBalancer   10.43.239.104   <pending>     8080:31417/TCP   38s
+service/frontend-service   LoadBalancer   10.43.232.173   10.0.2.15     8080:30136/TCP   39s
+
+NAME                                    DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR   AGE
+daemonset.apps/svclb-backend-service    1         1         0       1            0           <none>          39s
+daemonset.apps/svclb-trial-service      1         1         0       1            0           <none>          38s
+daemonset.apps/svclb-frontend-service   1         1         1       1            1           <none>          39s
+
+NAME                           READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/backend-app    0/3     3            0           39s
+deployment.apps/frontend-app   0/3     3            0           39s
+deployment.apps/trial-app      0/3     3            0           39s
+
+NAME                                     DESIRED   CURRENT   READY   AGE
+replicaset.apps/backend-app-5f749755f4   3         3         0       39s
+replicaset.apps/frontend-app-75cd57cfd   3         3         0       39s
+replicaset.apps/trial-app-6cd98d67f4     3         3         0       38s
+vagrant@localhost:/vagrant/manifests>
+```
+
+## exposing grafana
+```
+vagrant@localhost:~> kubectl get pod -n monitoring | grep grafana
+prometheus-grafana-57b5c4fdb6-x7wwp                      2/2     Running   0          16m
+vagrant@localhost:~>
+vagrant@localhost:~> kubectl port-forward -n monitoring prometheus-grafana-57b5c4fdb6-x7wwp --address 0.0.0.0 3000
+Forwarding from 0.0.0.0:3000 -> 3000
+Handling connection for 3000
+Handling connection for 3000
+Handling connection for 3000
+Handling connection for 3000
+Handling connection for 3000
+Handling connection for 3000
+Handling connection for 3000
+```
+
+## exposing the application
+```
+vagrant@localhost:~> kubectl port-forward svc/frontend-service 8080:8080
+Forwarding from 127.0.0.1:8080 -> 8080
+Forwarding from [::1]:8080 -> 8080
+```
+
+
 ## Verify the monitoring installation
 
 *TODO:* run `kubectl` command to show the running pods and services for all components. Take a screenshot of the output and include it here to verify the installation
