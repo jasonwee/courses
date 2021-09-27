@@ -15,9 +15,9 @@
                     +-------------+
 ```
 
-metrics       : prometheus
-tracing       : jaeger
-visualization : grafana
+* metrics       : prometheus
+* tracing       : jaeger
+* visualization : grafana
 
 
 ## Verify the monitoring installation
