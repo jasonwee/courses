@@ -256,16 +256,28 @@ run `kubectl` command to show the running pods and services for all components. 
 * [service](answer-img/01_services.png)
 
 ## Setup the Jaeger and Prometheus source
-*TODO:* Expose Grafana to the internet and then setup Prometheus as a data source. Provide a screenshot of the home page after logging into Grafana.
+Expose Grafana to the internet and then setup Prometheus as a data source. Provide a screenshot of the home page after logging into Grafana.
+* [grafana](answer-img/02_grafana.png)
 
 ## Create a Basic Dashboard
-*TODO:* Create a dashboard in Grafana that shows Prometheus as a source. Take a screenshot and include it here.
+Create a dashboard in Grafana that shows Prometheus as a source. Take a screenshot and include it here.
+* [grafana dashboard](answer-img/03_grafana_dashboard.png)
 
 ## Describe SLO/SLI
-*TODO:* Describe, in your own words, what the SLIs are, based on an SLO of *monthly uptime* and *request response time*.
+Describe, in your own words, what the SLIs are, based on an SLO of *monthly uptime* and *request response time*.
+
+A Service-Level Indicator (SLI) is a specific metric used to measure the performance of a service if it met its objective.
+
+For SLO (service Level Object) of monthly uptime of 99.9% every month. As for request response time, the average response time of a web request would take less than 1second to complete.
 
 ## Creating SLI metrics.
-*TODO:* It is important to know why we want to measure certain metrics for our customer. Describe in detail 5 metrics to measure these SLIs. 
+It is important to know why we want to measure certain metrics for our customer. Describe in detail 5 metrics to measure these SLIs. 
+
+* http response time to serve customer request
+* server/service uptime available for client access
+* http server error, example 5xx not available.
+* amount of traffic that webserver able to process before error start to appear.
+* misc monitoring such as disk usage, cpu/mem usage that indirectly affect client service.
 
 ## Create a Dashboard to measure our SLIs
 *TODO:* Create a dashboard to measure the uptime of the frontend and backend services We will also want to measure to measure 40x and 50x errors. Create a dashboard that show these values over a 24 hour period and take a screenshot.
