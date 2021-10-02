@@ -11,7 +11,7 @@ app.config['MONGO_URI'] = 'mongodb://example-mongodb-svc.default.svc.cluster.loc
 
 mongo = PyMongo(app)
 metrics = PrometheusMetrics(app)
-metrics.info("app_info", "Backend App", version="1.0.0")
+metrics.info("app_info", "Backend App", version="0.0.1")
 
 
 
