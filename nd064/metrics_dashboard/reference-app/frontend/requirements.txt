@@ -1,0 +1,5 @@
+Flask==1.1.2
+requests==2.23.0
+pylint==2.4.0
+gunicorn==20.0.4
+prometheus-flask-exporter==0.18.1
