@@ -13,16 +13,23 @@ from opentelemetry.sdk.trace.export import (
     ConsoleSpanExporter,
     SimpleExportSpanProcessor,
 )
+from prometheus_flask_exporter import PrometheusMetrics
+
+import logging
 
 trace.set_tracer_provider(TracerProvider())
 trace.get_tracer_provider().add_span_processor(
     SimpleExportSpanProcessor(ConsoleSpanExporter())
 )
 
+logging.basicConfig(level=logging.INFO)
+logging.info("app initializing logging")
+
 app = Flask(__name__)
 FlaskInstrumentor().instrument_app(app)
 RequestsInstrumentor().instrument()
-
+metrics = PrometheusMetrics(app)
+metrics.info("app_info", "Trial App", version="0.0.1")
 
 #config = Config(
 #        config={},
