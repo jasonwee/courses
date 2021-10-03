@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: trial-app
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: trial
@@ -14,7 +14,8 @@ spec:
     spec:
       containers:
       - name: trial
-        image: ghcr.io/thejaysmith/trial:v1
+        image: jasonwee/metrics-dashboard-trial
+        imagePullPolicy: Always
         ports:
         - containerPort: 8080
 ---
