@@ -44,11 +44,14 @@ logging.info("enter backend app")
 
 @app.route('/')
 def homepage():
-    return "Hello World"
+    with tracer.start_as_current_span('helloWorld'):
+        a = "Hello World"
+    return a
 
 @app.route('/api')
 def my_api():
-    answer = "something"
+    with tracer.start_as_current_span('api'):
+        answer = "something"
     return jsonify(response=answer)
 
 @app.route('/star', methods=['POST'])
