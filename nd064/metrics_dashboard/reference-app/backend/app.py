@@ -7,7 +7,24 @@ from flask_cors import CORS
 from prometheus_flask_exporter import PrometheusMetrics
 from prometheus_flask_exporter.multiprocess import GunicornInternalPrometheusMetrics
 
+from opentelemetry import trace
+from opentelemetry.exporter.jaeger.thrift import JaegerExporter
+from opentelemetry.sdk.resources import SERVICE_NAME, Resource
+from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry.sdk.trace.export import BatchSpanProcessor
 
+
+## jaeger
+trace.set_tracer_provider(
+    TracerProvider(
+        resource=Resource.create({SERVICE_NAME: "backend-service"})
+    )
+)
+jaeger_exporter = JaegerExporter()
+span_processor = BatchSpanProcessor(jaeger_exporter)
+trace.get_tracer_provider().add_span_processor(span_processor)
+tracer = trace.get_tracer(__name__)
+## jaeger
 
 app = Flask(__name__)
 metrics = GunicornInternalPrometheusMetrics(app)
