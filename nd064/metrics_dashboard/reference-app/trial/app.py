@@ -1,5 +1,7 @@
-from flask import Flask, render_template, request, jsonify
+import logging
 
+from flask import Flask, render_template, jsonify
+from flask_cors import CORS
 from jaeger_client import Config
 from jaeger_client.metrics.prometheus import PrometheusMetricsFactory
 from opentelemetry import trace
@@ -13,9 +15,7 @@ from opentelemetry.sdk.trace.export import (
     ConsoleSpanExporter,
     SimpleExportSpanProcessor,
 )
-from prometheus_flask_exporter import PrometheusMetrics
-
-import logging
+from prometheus_flask_exporter.multiprocess import GunicornInternalPrometheusMetrics
 
 trace.set_tracer_provider(TracerProvider())
 trace.get_tracer_provider().add_span_processor(
@@ -28,8 +28,8 @@ logging.info("app initializing logging")
 app = Flask(__name__)
 FlaskInstrumentor().instrument_app(app)
 RequestsInstrumentor().instrument()
-metrics = PrometheusMetrics(app)
-metrics.info("app_info", "Trial App", version="0.0.1")
+metrics = GunicornInternalPrometheusMetrics(app)
+CORS(app)
 
 #config = Config(
 #        config={},
@@ -77,4 +77,4 @@ def homepage():
     return jsonify(homepages)
 
 if __name__ == "__main__":
-    app.run(debug=True,)
+    app.run(debug=True)
