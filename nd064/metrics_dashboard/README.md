@@ -280,7 +280,8 @@ It is important to know why we want to measure certain metrics for our customer.
 * misc monitoring such as disk usage, cpu/mem usage that indirectly affect client service.
 
 ## Create a Dashboard to measure our SLIs
-*TODO:* Create a dashboard to measure the uptime of the frontend and backend services We will also want to measure to measure 40x and 50x errors. Create a dashboard that show these values over a 24 hour period and take a screenshot.
+Create a dashboard to measure the uptime of the frontend and backend services We will also want to measure to measure 40x and 50x errors. Create a dashboard that show these values over a 24 hour period and take a screenshot.
+* [grafana dashboard](answer-img/04_app_dashboard.png)
 
 ## Tracing our Flask App
 *TODO:*  We will create a Jaeger span to measure the processes on the backend. Once you fill in the span, provide a screenshot of it here.
