@@ -12,6 +12,7 @@ from opentelemetry.exporter.jaeger.thrift import JaegerExporter
 from opentelemetry.sdk.resources import SERVICE_NAME, Resource
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
+from opentelemetry.instrumentation.flask import FlaskInstrumentor
 
 
 ## jaeger
@@ -27,6 +28,7 @@ tracer = trace.get_tracer(__name__)
 ## jaeger
 
 app = Flask(__name__)
+FlaskInstrumentor().instrument_app(app, excluded_urls="metrics")
 metrics = GunicornInternalPrometheusMetrics(app)
 CORS(app)
 
