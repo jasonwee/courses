@@ -1,9 +1,8 @@
 from flask import Flask, render_template, request
-from prometheus_flask_exporter import PrometheusMetrics
+from prometheus_flask_exporter.multiprocess import GunicornInternalPrometheusMetrics
 
 app = Flask(__name__)
-metrics = PrometheusMetrics(app)
-metrics.info("app_info", "Frontend App", version="0.0.1")
+metrics = GunicornInternalPrometheusMetrics(app)
 
 @app.route('/')
 def homepage():
