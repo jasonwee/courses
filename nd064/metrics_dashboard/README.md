@@ -281,15 +281,17 @@ It is important to know why we want to measure certain metrics for our customer.
 
 ## Create a Dashboard to measure our SLIs
 Create a dashboard to measure the uptime of the frontend and backend services We will also want to measure to measure 40x and 50x errors. Create a dashboard that show these values over a 24 hour period and take a screenshot.
-* [app dashboard](answer-img/04_app_dashboard.png)
+* [app dashboard 1](answer-img/04_app_dashboard.png)
+* [app dashboard 2](answer-img/04_1_app_dashboard.png)
 
 ## Tracing our Flask App
 We will create a Jaeger span to measure the processes on the backend. Once you fill in the span, provide a screenshot of it here.
-
 * [jaeger app](answer-img/05_jaeger_app.png)
 
 ## Jaeger in Dashboards
-*TODO:* Now that the trace is running, let's add the metric to our current Grafana dashboard. Once this is completed, provide a screenshot of it here.
+Now that the trace is running, let's add the metric to our current Grafana dashboard. Once this is completed, provide a screenshot of it here.
+
+* [grafana displaying jaeger traces](answer-img/06_grafana_jaeger.png)
 
 ## Report Error
 *TODO:* Using the template below, write a trouble ticket for the developers, to explain the errors that you are seeing (400, 500, latency) and to let them know the file that is causing the issue.
