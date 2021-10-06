@@ -1,18 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: backend-app
+  name: backend
   annotations:
-    "sidecar.jaegertracing.io/inject": "true"
+    sidecar.jaegertracing.io/inject: "true"
+  labels:
+    app: backend
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: backend
+      release: prometheus
   template:
     metadata:
       labels:
         app: backend
+        release: prometheus
     spec:
       containers:
       - name: backend
@@ -27,9 +31,11 @@ metadata:
   name: backend-service
   labels:
     app: backend
+    release: prometheus
 spec:
   selector:
     app: backend
+    release: prometheus
   ports:
     - name: backend
       port: 8081
