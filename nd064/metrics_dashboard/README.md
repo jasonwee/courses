@@ -248,6 +248,13 @@ Forwarding from 127.0.0.1:8080 -> 8080
 Forwarding from [::1]:8080 -> 8080
 ```
 
+## additional
+```
+kubectl port-forward service/prometheus-grafana --address 0.0.0.0 3000:80 -n monitoring
+kubectl port-forward service/prometheus-kube-prometheus-prometheus --address 0.0.0.0 9090:9090 -n monitoring
+kubectl port-forward service/my-jaeger-tracing-query --address 0.0.0.0 16686:16686 -n observability
+```
+
 
 ## Verify the monitoring installation
 
@@ -321,5 +328,6 @@ Now that we have our SLIs and SLOs, create KPIs to accurately measure these metr
 * hardware resource: cpu, mem
 
 ## Final Dashboard
-*TODO*: Create a Dashboard containing graphs that capture all the metrics of your KPIs and adequately representing your SLIs and SLOs. Include a screenshot of the dashboard here, and write a text description of what graphs are represented in the dashboard.
+Create a Dashboard containing graphs that capture all the metrics of your KPIs and adequately representing your SLIs and SLOs. Include a screenshot of the dashboard here, and write a text description of what graphs are represented in the dashboard.
 
+* [final dashboard](answer-img/07_final_dashboard.png)
