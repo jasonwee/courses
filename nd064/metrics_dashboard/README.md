@@ -284,7 +284,9 @@ Create a dashboard to measure the uptime of the frontend and backend services We
 * [app dashboard](answer-img/04_app_dashboard.png)
 
 ## Tracing our Flask App
-*TODO:*  We will create a Jaeger span to measure the processes on the backend. Once you fill in the span, provide a screenshot of it here.
+We will create a Jaeger span to measure the processes on the backend. Once you fill in the span, provide a screenshot of it here.
+
+* [jaeger app](answer-img/05_jaeger_app.png)
 
 ## Jaeger in Dashboards
 *TODO:* Now that the trace is running, let's add the metric to our current Grafana dashboard. Once this is completed, provide a screenshot of it here.
