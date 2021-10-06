@@ -331,3 +331,8 @@ Now that we have our SLIs and SLOs, create KPIs to accurately measure these metr
 Create a Dashboard containing graphs that capture all the metrics of your KPIs and adequately representing your SLIs and SLOs. Include a screenshot of the dashboard here, and write a text description of what graphs are represented in the dashboard.
 
 * [final dashboard](answer-img/07_final_dashboard.png)
+
+## zip the project
+```
+zip -r metrics_dashboard.zip metrics_dashboard/ -x **/py39_env** -x **.vagrant** -x **/__pycache**
+```
