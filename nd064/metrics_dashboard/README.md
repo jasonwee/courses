@@ -294,22 +294,17 @@ Now that the trace is running, let's add the metric to our current Grafana dashb
 * [grafana displaying jaeger traces](answer-img/06_grafana_jaeger.png)
 
 ## Report Error
-*TODO:* Using the template below, write a trouble ticket for the developers, to explain the errors that you are seeing (400, 500, latency) and to let them know the file that is causing the issue.
+Using the template below, write a trouble ticket for the developers, to explain the errors that you are seeing (400, 500, latency) and to let them know the file that is causing the issue.
 
 TROUBLE TICKET
-
-Name:
-
-Date:
-
-Subject:
-
-Affected Area:
-
-Severity:
-
-Description:
-
+```
+Name          : posting to /star endpoint gave http 500
+Date          : 2021-10-06
+Subject       : mongodb resource is not setup
+Affected Area : backend application /star api endpoint
+Severity      : ERROR
+Description   : when hitting /star, mongodb is not setup.
+```
 
 ## Creating SLIs and SLOs
 *TODO:* We want to create an SLO guaranteeing that our application has a 99.95% uptime per month. Name three SLIs that you would use to measure the success of this SLO.
