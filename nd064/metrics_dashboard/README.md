@@ -325,15 +325,17 @@ We want to create an SLO guaranteeing that our application has a 99.95% uptime p
 Now that we have our SLIs and SLOs, create KPIs to accurately measure these metrics. We will make a dashboard for this, but first write them down here.
 
 ### error rate
-* error percentage per second
-* number of errors per second
+* http requests exceptions by container
+* jaeger traces by container
+* error response rate per second
+* success response rate per second
 ### server/service uptime available for client access
-* uptime
-* number of instances
-* requests success/failure
+* frontend service uptime
+* backend service uptime
+* trial service uptime
 ### http server error, example 5xx not available.
-* number of requests per second
-* number of traces per second
+* frontend http 4xx and 5xx
+* backend http 4xx and 5xx
 * number of successful/failure requests per second
 ### amount of traffic that webserver able to process before error start to appear.
 * average response time
@@ -348,6 +350,8 @@ Now that we have our SLIs and SLOs, create KPIs to accurately measure these metr
 Create a Dashboard containing graphs that capture all the metrics of your KPIs and adequately representing your SLIs and SLOs. Include a screenshot of the dashboard here, and write a text description of what graphs are represented in the dashboard.
 
 * [final dashboard](answer-img/07_final_dashboard.png)
+
+I have added description into the graph, please see [my dashboard](reference-dashboards/dashboard-1633452684132.json)
 
 ## zip the project
 ```
