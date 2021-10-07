@@ -280,7 +280,7 @@ For SLO (service Level Object) of monthly uptime of 99.9% every month. As for re
 ## Creating SLI metrics.
 It is important to know why we want to measure certain metrics for our customer. Describe in detail 5 metrics to measure these SLIs. 
 
-* http response time to serve customer request
+* error rate
 * server/service uptime available for client access
 * http server error, example 5xx not available.
 * amount of traffic that webserver able to process before error start to appear.
@@ -317,15 +317,32 @@ Description   : when hitting /star, mongodb is not setup.
 We want to create an SLO guaranteeing that our application has a 99.95% uptime per month. Name three SLIs that you would use to measure the success of this SLO.
 
 * uptime
-* number of http requests per second
+* http requests rate
 * cpu usage
+* http requests times
 
 ## Building KPIs for our plan
 Now that we have our SLIs and SLOs, create KPIs to accurately measure these metrics. We will make a dashboard for this, but first write them down here.
 
-* uptime: up
-* traffic: number of http request per second
-* hardware resource: cpu, mem
+### error rate
+* error percentage per second
+* number of errors per second
+### server/service uptime available for client access
+* uptime
+* number of instances
+* requests success/failure
+### http server error, example 5xx not available.
+* number of requests per second
+* number of traces per second
+* number of successful/failure requests per second
+### amount of traffic that webserver able to process before error start to appear.
+* average response time
+* median response time
+* 99th response time
+### misc monitoring such as disk usage, cpu/mem usage that indirectly affect client service.
+* cpu usage
+* memory usage
+* i/o usage
 
 ## Final Dashboard
 Create a Dashboard containing graphs that capture all the metrics of your KPIs and adequately representing your SLIs and SLOs. Include a screenshot of the dashboard here, and write a text description of what graphs are represented in the dashboard.
