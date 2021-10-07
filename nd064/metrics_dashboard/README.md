@@ -351,7 +351,7 @@ Create a Dashboard containing graphs that capture all the metrics of your KPIs a
 
 * [final dashboard](answer-img/07_final_dashboard.png)
 
-I have added description into the graph, please see [my dashboard](reference-dashboards/dashboard-1633452684132.json)
+I have added description into the graph, please see [my dashboard](reference-dashboards/my\ dashboard-1633452684132.json)
 
 ## zip the project
 ```
