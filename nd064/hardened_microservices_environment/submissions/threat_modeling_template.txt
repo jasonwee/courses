@@ -1,0 +1,58 @@
+Docker Threat Modeling
+Given Docker's system components and the STRIDE framework, identify five potential threats 
+that may arise.
+1. Spoofing
+   An attacker gain access as an admin to manipulate of the docker image.
+
+2. Tampering
+   Attacker may gain acecss to docker client due to docker misconfiguration such that it can pull down image with his malware attached.
+
+3. Information Disclosure
+   because of daemon file configuration not secure, an attacker may access to information that is unintended leak out.
+
+4. Elevation of Privilege: 
+   container image can be elevated via the flag --privilege
+
+5. Denial of Service
+   attacker launch syn flood attacked to the application causing valid service unable to function.
+
+
+Kubernetes Threat Modeling
+Given Kubernetes' system components and the STRIDE framework, identify five potential threats 
+that may arise.
+1. Spoofing 
+   man in the middle attacks due to configuration mismatch when apiserver cannot verify kubelets ssl certificate correctly.
+
+2. Tampering
+   attacker access to the kubernetes and install his own malware in of the the pods.
+
+3. Repudiation
+   by default, kubernetes does not allow certificate recovation and repudiation can happen due to that.
+
+4. Information Disclosure
+   an attacker may inspect processes running outside of the containers when configuration hostPIG is set to true
+
+5. Denial of Service
+   attacker may syn floods the pods causing cluster unable to serve legitimate requests.
+
+
+Docker-bench Run Results and Analysis
+From the failed findings, select and document 3 findings from the Docker-bench results that 
+you want to harden based on the 5 attack surface areas you identified in Step 1. At 
+least 1 of the 3 hardened findings should be different from the ones mentioned in the 
+exercise (i.e. 5.10, 5.14, and 5.22).
+1. 1.1.10
+   Ensure auditing is configured for Docker files and directories - /var/lib/docker (Automated)
+
+2. 2.2 
+   Ensure network traffic is restricted between containers on the default bridge
+
+3. 2.14
+   Ensure containers are restricted from acquiring new privileges
+
+4. error 2.15
+   Ensure live restore is enabled
+
+5. error 2.16
+   Ensure Userland Proxy is Disabled
+
