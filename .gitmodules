@@ -1,0 +1,3 @@
+[submodule "nd064/hardened_microservices_environment/vuln_app"]
+	path = nd064/hardened_microservices_environment/vuln_app
+	url = https://github.com/anxolerd/dvpwa
