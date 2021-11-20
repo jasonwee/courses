@@ -50,9 +50,9 @@ exercise (i.e. 5.10, 5.14, and 5.22).
 3. 2.14
    Ensure containers are restricted from acquiring new privileges
 
-4. error 2.15
+4. 2.15
    Ensure live restore is enabled
 
-5. error 2.16
+5. 2.16
    Ensure Userland Proxy is Disabled
 
