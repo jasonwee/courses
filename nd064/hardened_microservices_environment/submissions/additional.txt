@@ -1,0 +1,7 @@
+https://lucid.app/lucidchart/c779f6ca-9c7c-452d-82cd-3bd11fe41479/edit?beaconFlowId=68CC2B883EFE284A&invitationId=inv_c12a7234-17f1-4219-9920-f353d42fdd77&page=0_0#
+
+
+how to docker-bench
+```
+sudo docker-bench -D lesson-3-docker-attack-surface-analysis-and-hardening/exercises/docker-bench/cfg/
+```
