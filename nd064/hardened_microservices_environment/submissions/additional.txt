@@ -5,3 +5,11 @@ how to docker-bench
 ```
 sudo docker-bench -D lesson-3-docker-attack-surface-analysis-and-hardening/exercises/docker-bench/cfg/
 ```
+
+rke
+```
+vagrant up
+vim cluster.yml
+rke_linux-amd64 up
+
+```
