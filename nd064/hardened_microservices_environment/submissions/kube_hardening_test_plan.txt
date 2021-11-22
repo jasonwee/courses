@@ -1,0 +1,7 @@
+My suggestion:
+1. Identify what need to be improve after running kube-bench. Write out the fail checks into a list.
+2. Introducing one change at a time, perhaps categorize from easy to difficult and start from easy. Make sure cluster.yml is put into scm so it can be review and/or rollback.
+3. Test the change and then move to production, monitor cluster for sometime before continue the next change. This will ensure that one change at a time is easily rollback should it trigger problem in production.
+4. If the ingress traffic is a lot, to reduce risk, we can use the canary strategy, where a small fraction of traffic routed to the cluster change and if it is okay, only then apply the change to all clusters.
+5. For the long run, cluster monitoring and alerts also need to setup in case of something not expected happen. For example, there are some problem which does not surface immediately and only will surface after some time elapse.
+6. It is also very important to setup regression tests for the configuration and this will ensure problem are easily caught in fail tests should kube-bench has update or new security issue found and be alert to the dev team for quickly address.
