@@ -1,0 +1,31 @@
+# mainatiner: nick.reva@snap.com
+ENV["TERM"]="linux"
+
+Vagrant.configure("2") do |config|
+#test for Yi!
+  # set up root access
+  config.ssh.username = 'root'
+  config.ssh.password = 'vagrant'
+  config.ssh.insert_key = 'true'
+
+  NodeCount = 1
+
+  # configure Kubernetes Nodes
+  (1..NodeCount).each do |i|
+    config.vm.define "node#{i}" do |node|
+      # set base image for the vagrant box
+      config.vm.box = "opensuse/Leap-15.3.x86_64"
+
+      # set the static IP for the vagrant box
+      node.vm.network "private_network", ip: "192.168.50.10#{i}"
+      # configure the parameters for VirtualBox provider
+      node.vm.provider "virtualbox" do |v|
+        v.name = "node#{i}"
+        v.memory = 4096
+        v.cpus = 4
+      end
+    # Bootstrap the machine
+    config.vm.provision "shell", path: "bootstrap.sh"
+    end
+  end
+end
