@@ -13,3 +13,140 @@ vim cluster.yml
 rke_linux-amd64 up
 
 ```
+
+
+falco
+```
+# on host, setup vm and rke
+vagrant up
+rke_linux-amd64 up
+
+# on vm
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+chmod 700 get_helm.sh
+./get_helm.sh
+helm version
+helm repo add falcosecurity https://falcosecurity.github.io/charts
+
+# on host
+vagrant ssh
+rpm --import https://falco.org/repo/falcosecurity-3672BA8F.asc
+curl -s -o /etc/zypp/repos.d/falcosecurity.repo https://falco.org/repo/falcosecurity-rpm.repo
+
+# on vm
+zypper -n install gcc gcc-c++ git-core cmake libjq-devel ncurses-devel yaml-cpp-devel libopenssl-devel libcurl-devel c-ares-devel protobuf-devel grpc-devel patch which automake autoconf libtool libelf-devel libyaml-devel dkms kernel-default-devel
+
+# on vm, make the kernel same as kernel-default-devel
+# https://documentation.suse.com/sles/15-SP2/html/SLES-all/cha-tuning-multikernel.html
+localhost:~ # uname -r
+5.3.18-59.27-default
+localhost:~ # rpm -qa | grep kernel-devel
+kernel-devel-5.3.18-59.34.1.noarch
+localhost:~ # 
+localhost:~ # grep multiversion /etc/zypp/zypp.conf
+##	provides:multiversion(kernel)   - all packages providing 'multiversion(kernel)'
+multiversion = provides:multiversion(kernel)
+## Defining directory which may contain additional multiversion definitions.
+## one valid multiversion list entry per line. Empty lines and lines starting
+## ------------------------- [/etc/zypp/multiversion.d/example file begin] -----------------------
+## provides:multiversion(kernel)
+## ------------------------- [/etc/zypp/multiversion.d/example file end] -----------------------
+## Default value: {configdir}/multiversion.d
+# multiversiondir = /etc/zypp/multiversion.d
+## above multiversion variable is set. Packages can be specified as
+## Default: Do not delete any kernels if multiversion = provides:multiversion(kernel) is set
+# multiversion.kernels = latest,latest-1,running
+localhost:~ # zypper ref
+localhost:~ # zypper install -y  kernel-default-5.3.18-59.34.1.x86_64
+localhost:~ # reboot
+localhost:~ # uname -r
+5.3.18-59.34-default
+localhost:~ # rpm -qa | grep kernel-devel
+kernel-devel-5.3.18-59.34.1.noarch
+localhost:~ # 
+
+
+# on vm, compile falco and insmod the driver
+# https://falco.org/docs/getting-started/source/
+git clone https://github.com/falcosecurity/falco.git
+cd falco
+mkdir -p build
+cd build
+cmake ..
+make -j4 falco
+make -j4 driver
+insmod driver/falco.ko
+
+
+# on host, install falco using helm
+helm install --kubeconfig kube_config_cluster.yml falco falcosecurity/falco --set falco.grpc.enabled=true --set falco.grpcOutput.enabled=true
+
+# event send
+kubectl --kubeconfig kube_config_cluster.yml exec -it falco-5fdpl /bin/bash
+adduser best_hacker_tired
+cat /etc/shadow > /dev/null
+nc -l 8080
+
+# event check
+kubectl --kubeconfig kube_config_cluster.yml logs -f falco-5fdpl | grep adduser
+kubectl --kubeconfig kube_config_cluster.yml logs -f falco-5fdpl | grep /etc/shadow
+kubectl --kubeconfig kube_config_cluster.yml logs -f falco-5fdpl | grep nc
+
+# prometheus-operator
+helm repo add stable https://charts.helm.sh/stable
+helm install --kubeconfig kube_config_cluster.yml stable/prometheus-operator --generate-name
+kubectl --kubeconfig kube_config_cluster.yml --namespace default get pods -l "release=prometheus-operator-1637690222"
+kubectl --kubeconfig kube_config_cluster.yml --namespace default port-forward prometheus-prometheus-operator-163769-prometheus-0 9090
+
+# falco exoprter
+helm install --kubeconfig kube_config_cluster.yml falco-exporter --set serviceMonitor.enabled=true falcosecurity/falco-exporter
+kubectl --kubeconfig kube_config_cluster.yml --namespace default get pods
+kubectl --kubeconfig kube_config_cluster.yml get pods --namespace default -l "app.kubernetes.io/name=falco-exporter,app.kubernetes.io/instance=falco-exporter" -o jsonpath="{.items[0].metadata.name}"
+kubectl --kubeconfig kube_config_cluster.yml port-forward --namespace default falco-exporter-5pcgn 9376
+
+# falco servicemonitor
+touch falco_service_monitor.yaml
+
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    release: prometheus-operator-[CHANGE_ME]
+  name: falco-exporter-servicemonitor
+  namespace: default
+spec:
+  endpoints:
+  - bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
+  - port: metrics 
+    interval: 5s
+  namespaceSelector:
+    matchNames:
+    - default
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: falco-exporter
+      app.kubernetes.io/name: falco-exporter
+
+kubectl --kubeconfig kube_config_cluster.yml get prometheus
+kubectl --kubeconfig kube_config_cluster.yml edit prometheus prometheus-operator-163769-prometheus
+
+  ruleSelector:
+    matchLabels:                          
+      app: prometheus-operator
+      release: prometheus-operator-1637692881  
+
+kubectl --kubeconfig kube_config_cluster.yml apply -f falco_service_monitor.yaml
+
+http://localhost:9090/service-discovery
+
+# grafana
+kubectl --kubeconfig kube_config_cluster.yml --namespace default port-forward prometheus-operator-1637692881-grafana-6b85d94c4f-854z5 3000
+
+
+
+# tear down
+rke_linux-amd remove
+vagrant halt
+rm -rf .vagrant
+# virtualbox, remove everything in node1
+```
