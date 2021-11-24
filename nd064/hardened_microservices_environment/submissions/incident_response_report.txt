@@ -8,10 +8,18 @@
    cpu is heavily utilized and cluster under heavy load and slow responsive. This cause valid service requests slow in responding to client requests.
    
 4. Summmry of the impact:
-   Attacker managed to gain access to the cluster and run the crypto mining software.
+   Attacker managed to gain access to the cluster and run the crypto mining software. cluster resources spike and clearly shown in grafana dashboard.
 
 5. Summary of the remediation steps:
-   force delete of the pods from the cluster, and the cpu usage back to normal and service back to responsive.
+   1. force delete of miner pods from the cluster 
+   kubectl --kubeconfig kube_config_cluster.yml delete pod <pod_name> --grace-period=0 --force
+
+   2. cpu usage back to normal and service back to responsive.
+   see the link here, falco_grafana_screenshot.png , check that the graph cpu usage trend going down.
+   
+   3. review administrative management on cluster API.
 
 6. Summary of lessons learned:
-   the cluster should be harden and especially restrict access to the cluster. Alert need to be setup should cpu usage goes 100% for a period of time in the future. 
+   the cluster should be harden and especially restrict access to the cluster. administrative manager cluster api must be review in order to achieve that.
+
+   Alert need to be setup should cpu usage goes 100% for a period of time in the future. This prevent any other similar incident happening again and response can be put in action faster.
