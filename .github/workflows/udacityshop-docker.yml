@@ -45,3 +45,27 @@ jobs:
           file: ./nd064/udacityshop/src/adservice-v2/Dockerfile
           push: true
           tags: jasonwee/udacityshop-adservice-v2:latest
+      -
+        name: Build and push currencyservice
+        uses: docker/build-push-action@v2
+        with:
+          context: ./nd064/udacityshop/src/currencyservice
+          file: ./nd064/udacityshop/src/currencyservice/Dockerfile
+          push: true
+          tags: jasonwee/udacityshop-currencyservice:latest
+      -
+        name: Build and push frontend
+        uses: docker/build-push-action@v2
+        with:
+          context: ./nd064/udacityshop/src/frontend
+          file: ./nd064/udacityshop/src/frontend/Dockerfile
+          push: true
+          tags: jasonwee/udacityshop-frontend:latest
+      -
+        name: Build and push productcatalogservice
+        uses: docker/build-push-action@v2
+        with:
+          context: ./nd064/udacityshop/src/productcatalogservice
+          file: ./nd064/udacityshop/src/productcatalogservice/Dockerfile
+          push: true
+          tags: jasonwee/udacityshop-productcatalogservice:latest
