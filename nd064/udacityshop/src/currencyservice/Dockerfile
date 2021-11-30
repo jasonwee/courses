@@ -16,11 +16,9 @@ FROM node:12-alpine as base
 
 FROM base as builder
 
-RUN apk add --no-cache --virtual build-dependencies build-base
-
 # Some packages (e.g. @google-cloud/profiler) require additional
 # deps for post-install scripts
-RUN apk add --update --no-cache \
+RUN apk add --update --no-cache bash \
     python \
     make \
     g++
