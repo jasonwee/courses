@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: adservice
+  namespace: dev
 spec:
   selector:
     matchLabels:
@@ -15,7 +16,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: {{ IMAGE }}
+        image: jasonwee/udacityshop-adservice:latest
         ports:
         - containerPort: 9555
         env:
@@ -43,6 +44,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: adservice
+  namespace: dev
 spec:
   type: ClusterIP
   selector:
