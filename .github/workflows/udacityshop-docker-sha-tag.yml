@@ -25,8 +25,8 @@ jobs:
           images: |
             jasonwee/udacityshop-adservice
           # generate Docker tags based on the following events/attributes
-        tags: |
-          type=sha
+          tags: |
+            type=sha
       -
         name: Docker meta adservice-v2
         id: meta_adservice_v2
@@ -36,8 +36,8 @@ jobs:
           images: |
             jasonwee/udacityshop-adservice-v2
           # generate Docker tags based on the following events/attributes
-        tags: |
-          type=sha
+          tags: |
+            type=sha
       -
         name: Docker meta currencyservice
         id: meta_currencyservice
@@ -47,8 +47,8 @@ jobs:
           images: |
             jasonwee/udacityshop-currencyservice
           # generate Docker tags based on the following events/attributes
-        tags: |
-          type=sha
+          tags: |
+            type=sha
       -
         name: Docker meta frontend
         id: meta_frontend
@@ -58,8 +58,8 @@ jobs:
           images: |
             jasonwee/udacityshop-frontend
           # generate Docker tags based on the following events/attributes
-        tags: |
-          type=sha
+          tags: |
+            type=sha
       -
         name: Docker meta productcatalogservice
         id: meta_productcatalogservice
@@ -69,8 +69,8 @@ jobs:
           images: |
             jasonwee/udacityshop-productcatalogservice
           # generate Docker tags based on the following events/attributes
-        tags: |
-          type=sha
+          tags: |
+            type=sha
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v1
