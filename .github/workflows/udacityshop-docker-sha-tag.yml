@@ -1,0 +1,125 @@
+name: "Uda'CityShop [sha tag] - Package with Docker"
+
+# doc said pushed to master branch
+##  After creating the GitHub Action verify it executes successfully when a new commit is pushed to the master branch.
+## 
+# but requirement said trigger on push
+##  Trigger on every push to the main branch
+on:
+  push:
+    branches: [main, master]
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v2
+      -
+        name: Docker meta adservice
+        id: meta_adservice
+        uses: docker/metadata-action@v3
+        with:
+          # list of Docker iamges to use as base name for tags
+          images: |
+            jasonwee/udacityshop-adservice
+          # generate Docker tags based on the following events/attributes
+        tags: |
+          type=sha
+      -
+        name: Docker meta adservice-v2
+        id: meta_adservice_v2
+        uses: docker/metadata-action@v3
+        with:
+          # list of Docker iamges to use as base name for tags
+          images: |
+            jasonwee/udacityshop-adservice-v2
+          # generate Docker tags based on the following events/attributes
+        tags: |
+          type=sha
+      -
+        name: Docker meta currencyservice
+        id: meta_currencyservice
+        uses: docker/metadata-action@v3
+        with:
+          # list of Docker iamges to use as base name for tags
+          images: |
+            jasonwee/udacityshop-currencyservice
+          # generate Docker tags based on the following events/attributes
+        tags: |
+          type=sha
+      -
+        name: Docker meta frontend
+        id: meta_frontend
+        uses: docker/metadata-action@v3
+        with:
+          # list of Docker iamges to use as base name for tags
+          images: |
+            jasonwee/udacityshop-frontend
+          # generate Docker tags based on the following events/attributes
+        tags: |
+          type=sha
+      -
+        name: Docker meta productcatalogservice
+        id: meta_productcatalogservice
+        uses: docker/metadata-action@v3
+        with:
+          # list of Docker iamges to use as base name for tags
+          images: |
+            jasonwee/udacityshop-productcatalogservice
+          # generate Docker tags based on the following events/attributes
+        tags: |
+          type=sha
+      -
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      -
+        name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      -
+        name: Build and push adservice
+        uses: docker/build-push-action@v2
+        with:
+          context: ./nd064/udacityshop/src/adservice
+          file: ./nd064/udacityshop/src/adservice/Dockerfile
+          push: true
+          tags: ${{ steps.meta_adservice.outputs.tags }}
+      -
+        name: Build and push adservice-v2
+        uses: docker/build-push-action@v2
+        with:
+          context: ./nd064/udacityshop/src/adservice-v2
+          file: ./nd064/udacityshop/src/adservice-v2/Dockerfile
+          push: true
+          tags: ${{ steps.meta_adservice_v2.outputs.tags }}
+      -
+        name: Build and push currencyservice
+        uses: docker/build-push-action@v2
+        with:
+          context: ./nd064/udacityshop/src/currencyservice
+          file: ./nd064/udacityshop/src/currencyservice/Dockerfile
+          push: true
+          tags: ${{ steps.meta_currencyservice.outputs.tags }}
+      -
+        name: Build and push frontend
+        uses: docker/build-push-action@v2
+        with:
+          context: ./nd064/udacityshop/src/frontend
+          file: ./nd064/udacityshop/src/frontend/Dockerfile
+          push: true
+          tags: ${{ steps.meta_frontend.outputs.tags }}
+      -
+        name: Build and push productcatalogservice
+        uses: docker/build-push-action@v2
+        with:
+          context: ./nd064/udacityshop/src/productcatalogservice
+          file: ./nd064/udacityshop/src/productcatalogservice/Dockerfile
+          push: true
+          tags: ${{ steps.meta_productcatalogservice.outputs.tags }}
