@@ -7,8 +7,7 @@ name: "Uda'CityShop [latest tag] - Package with Docker"
 ##  Trigger on every push to the main branch
 on:
   push:
-    branches:
-      - 'main'
+    branches: [main, master]
 
 jobs:
   docker:
