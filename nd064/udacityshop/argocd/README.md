@@ -13,3 +13,7 @@ kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.pas
 kubectl apply -f udacityshop-dev.yaml 
 kubectl apply -f udacityshop-prod.yaml 
 ```
+
+```
+http://192.168.50.4:30008/
+```
