@@ -11,3 +11,11 @@ helm install prometheus prometheus-community/kube-prometheus-stack --namespace m
 kubectl --namespace monitoring get pods -l "release=prometheus"
 kubectl get all -n monitoring
 ```
+
+```
+kubectl get all -n monitoring
+```
+
+```
+http://192.168.50.4:30030/
+```
