@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: udacityshop-dev-v2
+  namespace: argocd
+spec:
+  destination:
+    namespace: default
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: nd064/udacityshop/kubernetes-manifests/dev-v2
+    repoURL: https://github.com/jasonwee/courses
+    targetRevision: HEAD
+  syncPolicy: 
+    automated: {}
