@@ -113,3 +113,8 @@ message Ad {
     // short advertisement text to display.
     string text = 2;
 }
+
+
+service AdServiceV2 {
+    rpc GetAdsV2(AdRequest) returns (AdResponse) {}
+}

@@ -16,9 +16,17 @@
 
 #!/bin/bash -e
 
+
 PATH=$PATH:$GOPATH/bin
 protodir=../../pb
 
-# protoc --go_out=plugins=grpc:genproto -I $protodir $protodir/demo.proto
-# --go-grpc_out=genproto
-protoc --go_out=plugins=grpc:genproto  -I $protodir $protodir/demo.proto
+#protoc --go_out=plugins=grpc:genproto -I $protodir $protodir/demo.proto --go-grpc_out=genproto
+# old deprecated
+#/usr/bin/protoc  --go_out=plugins=grpc:genproto  -I $protodir $protodir/demo.proto
+#protoc --proto_path=$protodir --go_out=./genproto --go_opt=Mdemo.proto=. $protodir/demo.proto
+
+protoc -I $protodir --go_out ./genproto --go_opt paths=source_relative \
+--go-grpc_out ./genproto --go-grpc_opt=Mdemo.proto=. \
+$protodir/demo.proto
+
+#protoc --proto_path=proto --go_out=plugins=grpc:. proto/*.proto
