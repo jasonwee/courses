@@ -11,8 +11,8 @@ import grpc
 import demo_pb2
 import demo_pb2_grpc
 
-from grpc_health.v1 import health_pb2
-from grpc_health.v1 import health_pb2_grpc
+from grpc.health.v1 import health_pb2
+from grpc.health.v1 import health_pb2_grpc
 
 from logger import getJSONLogger
 logger = getJSONLogger('adservice-v2-server')
