@@ -15,7 +15,7 @@ spec:
       serviceAccountName: default
       containers:
         - name: server
-          image: jasonwee/udacityshop-frontend:sha-a964edd
+          image: jasonwee/udacityshop-frontend:sha-7852745
           ports:
           - containerPort: 8080
           readinessProbe:
@@ -42,7 +42,7 @@ spec:
           - name: CURRENCY_SERVICE_ADDR
             value: "currencyservice:7000"
           - name: AD_SERVICE_ADDR
-            value: "adservice:9555"
+            value: "adservice:9556"
           resources:
             requests:
               cpu: 100m
