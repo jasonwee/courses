@@ -27,3 +27,22 @@ kubectl apply -f kubernetes-manifests/dev/
 
 ## access
 http://192.168.50.4:30040/
+
+
+## project submission
+```
+cd
+mkdir -p submission/nd064/udacityshop
+cd submission
+
+# in another term
+cp -pr ~/.github/workflows/ .
+cd nd064/udacityshop/
+cp -pr argocd grafana kubernetes-manifests pb screenshots src ~/submission/nd064/udacityshop/
+
+
+#tar --exclude='techtrends-dockerhub.yml' --exclude='py39_env' -zcvf submission.tar.gz submission/
+zip -r submission.zip submission/ -x "*py39_env*" -x submission/.github/workflows/techtrends-dockerhub.yml
+rm -rf submission
+
+```
