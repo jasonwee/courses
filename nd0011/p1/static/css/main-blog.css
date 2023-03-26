@@ -1,0 +1,131 @@
+@import "card.css";
+@import "blog.css";
+@import "social.css";
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #292929;
+    color: white;
+}
+
+p {
+    font-size: 17px;
+    font-weight: 500;
+    color: white;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.mid {
+    display: flex;
+    align-items: center;
+    background-color: #333333;
+}
+
+#nav {
+    grid-area: nav;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    background-color: #7d7d7d;
+    grid-gap: 10px;
+}
+
+#header {
+    grid-area: header;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+#blog {
+    grid-area: blog;
+    flex-direction: column;
+    flex-flow: row wrap;
+    align-items: flex-start;
+    grid-gap: 5px;
+    padding: 15px;
+}
+
+.long-text {
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    overflow:hidden;
+}
+
+#misc {
+    grid-area: misc;
+    flex-direction: column;
+    grid-gap: 5px;
+}
+
+.left {
+    align-self: flex-start;
+}
+
+#footer {
+    grid-area: footer;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    background-color: #7d7d7d;
+}
+
+#footer > p,i {
+    color: black;
+}
+
+.avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.box-header {
+    display: flex;
+    flex-direction: column;
+}
+
+#title {
+    font-family: 'Arial', 'Roboto', 'sans-serif';
+    text-align: center;
+}
+
+.content {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-gap: 15px;
+    grid-template-areas:
+    "nav "
+    "header"
+    "blog "
+    "misc"
+    "footer";
+    justify-content: center;
+    margin: auto;
+}
+
+@media (min-width:1170px) {
+    .content {
+        display: grid;
+        grid-template-columns: 30vw 30vw 20vw;
+        grid-template-rows: 10vh 10vh 50vh 10vh;
+        grid-gap: 15px;
+        grid-template-areas:
+        "nav nav nav"
+        "header header header"
+        "blog blog misc"
+        "blog blog misc"
+        "blog blog misc"
+        "footer footer footer";
+        justify-content: center;
+    }
+}

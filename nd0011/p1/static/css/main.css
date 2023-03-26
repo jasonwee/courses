@@ -1,0 +1,121 @@
+@import "card.css";
+@import "blog.css";
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #292929;
+    color: white;
+}
+
+p {
+    font-size: 17px;
+    font-weight: 500;
+    color: white;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+.mid {
+    display: flex;
+    align-items: center;
+    background-color: #333333;
+}
+
+#nav {
+    grid-area: nav;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    background-color: #7d7d7d;
+    grid-gap: 10px;
+}
+
+#header {
+    grid-area: header;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+#blog {
+    grid-area: blog;
+    flex-direction: column;
+    flex-flow: row wrap;
+    align-items: flex-start;
+    grid-gap: 5px;
+}
+
+#footer {
+    grid-area: footer;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    background-color: #7d7d7d;
+}
+
+#footer > p,i {
+    color: black;
+}
+
+.box-header {
+    display: flex;
+    flex-direction: column;
+}
+
+#title {
+    font-family: 'Arial', 'Roboto', 'sans-serif';
+    text-align: center;
+}
+
+.content {
+    display: grid;
+    margin: auto;
+    grid-template-rows: 10vh 10vh 50vh 20vh;
+    grid-gap: 15px;
+    grid-template-areas:
+    "nav nav"
+    "header header"
+    "blog blog"
+    "blog blog"
+    "blog blog"
+    "footer footer";
+    justify-content: center;
+}
+
+@media (mid-width: 750px) and (max-width: 1169px) {
+    .content {
+        display: grid;
+        grid-template-columns: 45vw 45vw;
+        grid-template-rows: 10vh 10vh 50vh 20vh;
+        grid-gap: 15px;
+        grid-template-areas:
+        "nav nav"
+        "header header"
+        "blog blog"
+        "blog blog"
+        "blog blog"
+        "footer footer";
+        justify-content: center;
+    }
+}
+
+@media (min-width:1170px) {
+    .content {
+        display: grid;
+        grid-template-columns: 30vw 30vw;
+        grid-template-rows: 10vh 10vh 50vh 20vh;
+        grid-gap: 15px;
+        grid-template-areas:
+        "nav nav"
+        "header header"
+        "blog blog"
+        "blog blog"
+        "blog blog"
+        "footer footer";
+        justify-content: center;
+    }
+}

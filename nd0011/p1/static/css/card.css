@@ -1,0 +1,38 @@
+.blog-title {
+    position:relative;
+    margin-top:3px;
+    font-size: 22px;
+    font-weight: bold;
+    margin: 10px;
+}
+
+.blog-desc {
+    position:relative;
+    margin-top:10px;
+    font-size: 12px;
+    margin: 10px;
+    white-space: initial;
+}
+
+.blog-cont {
+    position:absolute;
+    bottom: 20px;
+    font-size: 12px;
+    font-weight: 100;
+    margin: 10px;
+    background-color: #f4511e;
+    border: none;
+    color: white;
+    padding: 12px 28px;
+    text-align: center;
+    font-size: 14px;
+    opacity: 0.6;
+    transition: 0.3s;
+    display: inline-block;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.blog-cont:hover {
+    opacity: 1
+}

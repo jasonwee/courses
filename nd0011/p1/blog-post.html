@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+   <head>
+      <meta charset="utf-8" >
+      <meta name="viewport" content="width = device-width, initial-scale=1.0">
+      <title>Information Technology Blogs</title>
+      <link rel="stylesheet"  href="static/css/main-blog.css">
+   </head>
+   <body>
+      <div class="content">
+         <div class="mid" id="nav">
+            <div>
+               <a href="index.html">
+                  <h2>Home</h2>
+               </a>
+            </div>
+            <div>
+               <a href="http://blog.weetech.ch/">
+                  <h2>About</h2>
+               </a>
+            </div>
+         </div>
+         <header class="mid" id="header">
+            <div class="box-header" id="title">
+               <h1>how to setup mariadb galera cluster in docker container</h1>
+            </div>
+         </header>
+         <section class="mid" id="blog">
+            <pre class="long-text">
+1. create network (one time)
+
+   docker network create --subnet=172.18.0.0/16 mynet123
+
+
+2. create image that can start service in container (one time)
+
+   mkdir systemd
+
+   cd systemd
+
+   vim Dockerfile
+
+   FROM almalinux
+
+   ENV container docker
+
+
+
+   RUN (cd /lib/systemd/system/sysinit.target.wants/; for i in ; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done);
+
+
+
+   RUN rm -rf /lib/systemd/system/multi-user.target.wants/ \
+
+   && rm -rf /etc/systemd/system/.wants/ \
+
+   && rm -rf /lib/systemd/system/local-fs.target.wants/ \
+
+   && rm -f /lib/systemd/system/sockets.target.wants/udev \
+
+   && rm -f /lib/systemd/system/sockets.target.wants/initctl \
+
+   && rm -rf /lib/systemd/system/basic.target.wants/ \
+
+   && rm -f /lib/systemd/system/anaconda.target.wants/*
+
+
+
+   VOLUME [ “/sys/fs/cgroup” ]
+
+   CMD ["/usr/sbin/init"]
+
+
+
+3. build image (one time)
+
+   docker build -t almalinux-md .
+
+
+
+4. start the container in the background
+
+   docker run -v /tmp/node1/:/var/lib/mysql --detach --rm -it --privileged --net mynet123 --ip 172.18.0.11 --name node1  almalinux-md
+
+   docker run -v /tmp/node2/:/var/lib/mysql --detach --rm -it --privileged --net mynet123 --ip 172.18.0.12 --name node2  almalinux-md
+
+   docker run -v /tmp/node3/:/var/lib/mysql --detach --rm -it --privileged --net mynet123 --ip 172.18.0.13 --name node3  almalinux-md
+
+
+
+5. attach it and so can install mariadb and gelera, etc
+
+   docker exec -it node1 bash
+
+   docker exec -it node2 bash
+
+   docker exec -it node3 bash
+
+
+
+6. install in all 3 nodes
+
+   dnf install -y mariadb-server.x86_64  mariadb.x86_64 rsync python3-policycoreutils vim nc telnet epel-release.noarch mariadb-server-galera.x86_64
+
+
+
+7. on first node
+
+   systemctl start mariadb
+
+   systemctl status mariadb
+
+   [root@6c3d7f5bc394 /]# mysql -uroot
+
+   MariaDB [(none)]> set password = password("password");
+
+   quit;
+
+   systemctl stop mariadb
+
+
+
+8. from step 5. wsrep_node_address and wsrep_node_name update to its corresponding name
+
+
+
+   [root@cfeee129fe92 /]# cat /etc/my.cnf.d/galera.cnf
+
+   [mysqld]
+
+   binlog_format=ROW
+
+   default-storage-engine=innodb
+
+   innodb_autoinc_lock_mode=2
+
+   bind-address=0.0.0.0
+
+
+
+   # Galera Provider Configuration
+
+   wsrep_on=ON
+
+   wsrep_provider=/usr/lib64/galera/libgalera_smm.so
+
+
+
+   # Galera Cluster Configuration
+
+   wsrep_cluster_name="ot_mariadb_cluster"
+
+   wsrep_cluster_address="gcomm://172.18.0.11,172.18.0.12,172.18.0.13"
+
+
+
+   # Galera Synchronization Configuration
+
+   wsrep_sst_method=rsync
+
+
+
+   # Galera Node Configuration
+
+   wsrep_node_address="172.18.0.13"
+
+   wsrep_node_name="node3"
+
+   [root@cfeee129fe92 /]#
+
+
+
+9.  on first node, start the cluster
+
+    galera_new_cluster
+
+
+
+10. check on the first node,
+
+    mysql -u root -ppassword -e "SHOW STATUS LIKE 'wsrep_cluster_size'"
+
+
+
+11. bring up the remaining nodes one by one
+
+    systemctl start mariadb
+
+    mysql -u root -ppassword -e "SHOW STATUS LIKE 'wsrep_cluster_size'"
+
+
+
+12. ready to write/read
+
+mysql -u root -ppassword -e 'CREATE DATABASE playground;
+
+CREATE TABLE playground.equipment ( id INT NOT NULL AUTO_INCREMENT, type VARCHAR(50), quant INT, color VARCHAR(25), PRIMARY KEY(id));
+
+INSERT INTO playground.equipment (type, quant, color) VALUES ("slide", 2, "blue");'
+
+
+
+mysql -u root -ppassword -e 'SELECT * FROM playground.equipment;'
+            </pre>
+         </section>
+         <section class="mid" id="misc">
+            <span>Share!</span>
+            <article class="social">
+               <a href="#" class="fa fa-facebook" aria-label="facebook"></a>
+               <a href="#" class="fa fa-twitter" aria-label="twitter"></a>
+               <a href="#" class="fa fa-linkedin" aria-label="linkedin"></a>
+            </article>
+            <article class="author left">
+               <ul>
+                  <li><img src="static/img/SassyHippo.jpeg" alt="Avatar" class="avatar"></li>
+                  <li>Jason Wee</li>
+                  <li>Coder</li>
+                  <li>Weetech</li>
+                  <li>passion to code during spare time</li>
+               </ul>
+            </article>
+         </section>
+         <footer class="mid" id="footer">
+            <p>Simple theme. Powered by <a href="https://www.blogger.com/"><i>Blogger</i></a>.</p>
+         </footer>
+      </div>
+   </body>
+</html>
