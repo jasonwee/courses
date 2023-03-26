@@ -85,9 +85,6 @@ ul {
     flex-direction: column;
 }
 
-.author {
-    align-self: center;
-}
 
 #title {
     font-family: 'Arial', 'Roboto', 'sans-serif';
@@ -95,15 +92,22 @@ ul {
 }
 
 .card {
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    padding: 1px 5px;
+    margin: 5px auto;
+    width: 50%;
+}
+
+figure > img {
+    width: 100%;
 }
 
 .card:hover {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,1);
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,1);
 }
 
 .container {
-  padding: 2px 2px;
+    padding: 2px 2px;
 }
 
 .content {
