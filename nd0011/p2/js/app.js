@@ -114,6 +114,28 @@ function updateDOM(rows, active_section, active_menu) {
    })
 }
 
+function isInViewPort(element) {
+   const rect = element.getBoundingClientRect();
+   return rect.top < window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2;
+};
+
+function scrollHandler () {
+
+   const all_sections = document.querySelectorAll('section');
+   all_sections.forEach(element => {
+      const id = element.getAttribute('id');
+      const nav = element.getAttribute('data-nav');
+      if (isInViewPort(element)) {
+          // Update the data structure
+          sections = updateSection(sections, id);
+          // Update the DOM
+          updateDOM(sections, ACTIVE_CLASS_SECTION, ACTIVE_CLASS_MENU);
+      }
+
+   });
+}
+
+
 /**
  * End Helper Functions
 */
@@ -168,6 +190,7 @@ function main() {
 
    // Add class 'active' to section when near top of viewport
    // https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API#creating_an_intersection_observer
+   /*
    const options = {
      root: null,
      rootMargin: '0px',
@@ -188,6 +211,16 @@ function main() {
    sections.forEach(section => {
       observer.observe(document.getElementById(section.id));
    });
+   */
+
+   sections.forEach(section => {
+      if (isInViewPort(document.getElementById(section.id))) {
+         // Update the data structure
+         sections = updateSection(sections, section.id);
+         // Update the DOM
+         updateDOM(sections, ACTIVE_CLASS_SECTION, ACTIVE_CLASS_MENU);
+      }
+   });
 
    // scroll view operation
    const links = document.querySelectorAll('.menu__link');
@@ -196,11 +229,15 @@ function main() {
       link.addEventListener('click', (event) => {
          event.preventDefault();
          const sectionId = link.getAttribute('href').substring(1);
+         sections = updateSection(sections, sectionId);
+         updateDOM(sections, ACTIVE_CLASS_SECTION, ACTIVE_CLASS_MENU);
          document.getElementById(sectionId).scrollIntoView({
             behavior: 'smooth',
          });
       });
    });
+
+   window.addEventListener('scroll', scrollHandler);
 
 }
 
