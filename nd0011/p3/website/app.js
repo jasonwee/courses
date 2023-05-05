@@ -1,7 +1,7 @@
 /* Global Variables */
 const URL = 'https://api.openweathermap.org/data/2.5/weather';
 //const URL = 'https://api.openweathermap.org/geo/1.0/zip';
-const API_KEY = "2ea39989ad2278692864129c61a7d64c";
+const API_KEY = "";
 
 
 
