@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>Test</title>
+        <link rel="stylesheet" href="/styles/main.css">
+        <link rel="stylesheet" href="/styles/base.css">
+        <link rel="stylesheet" href="/styles/header.css">
+        <link rel="stylesheet" href="/styles/form.css">
+        <link rel="stylesheet" href="/styles/footer.css">
+    </head>
+
+    <body>
+
+        <header>
+            <div class="">
+                Logo
+            </div>
+            <div class="">
+                navigation
+            </div>
+        </header>
+
+        <main>
+            <section>
+                <form class="" onsubmit="return submitHandler(event)">
+                    <input id="url" type="text" name="input" value="https://jasonwee.github.io/qj-srv250/" onblur="urlHandler(this.value)" placeholder="give a valid url. example (https://jasonwee.github.io/qj-srv250/)">
+                    <input id="submit" type="submit" name="" value="submit" onclick="return submitHandler(event)" onsubmit="return submitHandler(event)">
+                </form>
+            </section>
+
+            <section>
+                <strong>Form Results:</strong>
+                <div id="polarity"></div>
+                <div id="subjectivity"></div>
+                <div id="text"></div>
+            </section>
+        </main>
+
+        <footer>
+            <p>This is a footer</p>
+        </footer>
+        <script>
+        function urlHandler(value) {
+           if (!Client.checkForURL(value)) {
+                alert("bro, not a valid url");
+                document.getElementById('submit').disabled = true;
+                return;
+           }
+           document.getElementById('submit').disabled = false;
+        }
+        function submitHandler(event) {
+           event.preventDefault()
+
+           const url = document.getElementById('url').value;
+           urlHandler(url);
+           Client.nlpURL(url).then(data => {
+               console.log(data);
+               document.getElementById('polarity').innerHTML = data.sentence_list[0].segment_list[0].polarity_term_list;
+               document.getElementById('subjectivity').innerHTML = data.subjectivity;
+               document.getElementById('text').innerHTML = data.sentence_list[0].text;
+           });
+        }
+        if ('serviceWorker' in navigator) {
+           // Use the window load event to keep the page load performant
+           window.addEventListener('load', () => {
+              navigator.serviceWorker.register('/service-worker.js');
+           });
+        }
+        </script>
+    </body>
+</html>
